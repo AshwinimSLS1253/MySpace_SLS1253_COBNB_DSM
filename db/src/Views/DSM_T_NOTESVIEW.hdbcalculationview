@@ -42,12 +42,18 @@
     <input node="DSM_M_EMPLY"/>
     <filter>&quot;ISDEL&quot;='0'</filter>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="MASTER">
-    <viewAttributes/>
+  <calculationView xsi:type="Calculation:ProjectionView" id="MASTER" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="TYPID"/>
+      <viewAttribute id="MSTID"/>
+      <viewAttribute id="NAMES"/>
+      <viewAttribute id="ISDEL"/>
+    </viewAttributes>
     <calculatedViewAttributes/>
     <input node="DSM_M_DRPWN"/>
+    <filter>&quot;ISDEL&quot;='0'</filter>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="leftOuter">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="EMPLY" multiJoinOrder="Outside In">
     <viewAttributes>
       <viewAttribute id="NOTID"/>
       <viewAttribute id="DSMID"/>
@@ -58,9 +64,9 @@
       <viewAttribute id="NOTES"/>
       <viewAttribute id="NSBDT"/>
       <viewAttribute id="ISDEL"/>
-      <viewAttribute id="EMPID"/>
-      <viewAttribute id="NSBYNAME"/>
-      <viewAttribute hidden="true" id="JOIN$NTSBY$EMPID"/>
+      <viewAttribute id="MSTID"/>
+      <viewAttribute id="NOTESTITLENAMES"/>
+      <viewAttribute hidden="true" id="JOIN$NTSTL$MSTID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="NOTES">
@@ -73,6 +79,45 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="NOTES" source="NOTES"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="NSBDT" source="NSBDT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ISDEL" source="ISDEL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$NTSTL$MSTID" source="NTSTL"/>
+    </input>
+    <input node="MASTER">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MSTID" source="MSTID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NOTESTITLENAMES" source="NAMES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$NTSTL$MSTID" source="MSTID"/>
+    </input>
+    <joinAttribute name="JOIN$NTSTL$MSTID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="EMPLY" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="NOTID"/>
+      <viewAttribute id="DSMID"/>
+      <viewAttribute id="NTSBY"/>
+      <viewAttribute id="NTSTL"/>
+      <viewAttribute id="NTSDT"/>
+      <viewAttribute id="NTSTM"/>
+      <viewAttribute id="NOTES"/>
+      <viewAttribute id="NSBDT"/>
+      <viewAttribute id="ISDEL"/>
+      <viewAttribute id="MSTID"/>
+      <viewAttribute id="NOTESTITLENAMES"/>
+      <viewAttribute id="EMPID"/>
+      <viewAttribute id="NSBYNAME"/>
+      <viewAttribute hidden="true" id="JOIN$NTSBY$EMPID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="NOTID" source="NOTID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DSMID" source="DSMID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NTSBY" source="NTSBY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NTSTL" source="NTSTL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NTSDT" source="NTSDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NTSTM" source="NTSTM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NOTES" source="NOTES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NSBDT" source="NSBDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ISDEL" source="ISDEL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MSTID" source="MSTID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NOTESTITLENAMES" source="NOTESTITLENAMES"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$NTSBY$EMPID" source="NTSBY"/>
     </input>
     <input node="EMPLY">
@@ -83,47 +128,56 @@
     <joinAttribute name="JOIN$NTSBY$EMPID"/>
   </calculationView>
 </calculationViews>
-<logicalModel id="Join_1">
+<logicalModel id="Join_1_2">
   <attributes>
     <attribute id="NOTID" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NOTID"/>
-      <keyMapping columnObjectName="Join_1" columnName="NOTID"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="NOTID"/>
     </attribute>
     <attribute id="DSMID" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Foreign Key Disability ID Unique Id"/>
-      <keyMapping columnObjectName="Join_1" columnName="DSMID"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="DSMID"/>
     </attribute>
     <attribute id="NTSBY" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Notes Created by"/>
-      <keyMapping columnObjectName="Join_1" columnName="NTSBY"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="NTSBY"/>
     </attribute>
     <attribute id="NTSTL" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Notes Title"/>
-      <keyMapping columnObjectName="Join_1" columnName="NTSTL"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="NTSTL"/>
     </attribute>
     <attribute id="NTSDT" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Notes Date"/>
-      <keyMapping columnObjectName="Join_1" columnName="NTSDT"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="NTSDT"/>
     </attribute>
     <attribute id="NTSTM" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Notes Time "/>
-      <keyMapping columnObjectName="Join_1" columnName="NTSTM"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="NTSTM"/>
     </attribute>
     <attribute id="NOTES" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Notes "/>
-      <keyMapping columnObjectName="Join_1" columnName="NOTES"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="NOTES"/>
     </attribute>
     <attribute id="NSBDT" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Notes Submitted Date"/>
-      <keyMapping columnObjectName="Join_1" columnName="NSBDT"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="NSBDT"/>
     </attribute>
     <attribute id="EMPID" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Employee ID"/>
-      <keyMapping columnObjectName="Join_1" columnName="EMPID"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="EMPID"/>
     </attribute>
     <attribute id="NSBYNAME" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Employee name"/>
-      <keyMapping columnObjectName="Join_1" columnName="NSBYNAME"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="NSBYNAME"/>
+    </attribute>
+  
+    <attribute id="MSTID" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MSTID"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="MSTID"/>
+    </attribute>
+    <attribute id="NOTESTITLENAMES" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NOTESTITLENAMES"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="NOTESTITLENAMES"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -134,34 +188,39 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="221.11302679000914" y="112"/>
+      <upperLeftCorner x="221" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="NOTES" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92.00000000000001" y="376.9999988079071"/>
+      <upperLeftCorner x="92" y="376"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="EMPLY" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302.00000000000006" y="376.9999988079071"/>
+      <upperLeftCorner x="302" y="376"/>
       <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="221.11302679000914" y="217"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape modelObjectName="NOTES" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="123.89306640625"/>
-    </shape>
-    <shape modelObjectName="EMPLY" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="126.94384765625"/>
     </shape>
     <shape expanded="true" modelObjectName="MASTER" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="521" y="377"/>
+      <upperLeftCorner x="541" y="376"/>
       <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="EMPLY" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="126"/>
+    </shape>
+    <shape modelObjectName="NOTES" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="123"/>
+    </shape>
+    <shape modelObjectName="MASTER" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="-237" y="43"/>
+      <rectangleSize width="125"/>
     </shape>
   </shapes>
 </layout>
