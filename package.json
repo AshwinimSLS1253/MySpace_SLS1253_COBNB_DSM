@@ -1,0 +1,60 @@
+{
+  "name": "COBND_DSM_NEW",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "dependencies": {
+    "@cap-js/hana": "^2",
+    "@sap/cds": "^9",
+    "express": "^4",
+    "@sap/xssec": "^4"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^2",
+    "@sap/cds-dk": "^9"
+  },
+  "scripts": {
+    "start": "cds-serve"
+  },
+  "private": true,
+  "cds": {
+    "requires": {
+
+      "[hybrid]": {
+
+        "auth": {
+
+          "kind": "mocked"
+
+        }
+
+      },
+
+      "db": "hana",
+
+      "auth": {
+
+        "kind": "xsuaa"
+
+      }
+
+    },
+
+    "sql": {
+
+      "native_hana_associations": false
+
+    },
+
+    "server": {
+
+      "body_parser": {
+
+        "limit": "10mb"
+
+      }
+
+    }
+
+  }
+
+}

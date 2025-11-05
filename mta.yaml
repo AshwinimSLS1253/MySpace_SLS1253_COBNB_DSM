@@ -1,0 +1,55 @@
+_schema-version: 3.3.0
+ID: COBND_DSM_NEW
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
+modules:
+  - name: COBND_DSM_NEW-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      instances: 1
+      Memory: 100M
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm-ci
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: COBND_DSM_NEW-db
+      - name: COBND_DSM_NEW-auth
+
+  - name: COBND_DSM_NEW-db-deployer
+    type: hdb
+    path: db
+    parameters:
+      Memory: 100M
+      buildpack: nodejs_buildpack
+    requires:
+      - name: COBND_DSM_NEW-db
+
+resources:
+  - name: COBND_DSM_NEW-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+  - name: COBND_DSM_NEW-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: COBND_DSM_NEW-${org}-${space}
+        tenant-mode: dedicated
+

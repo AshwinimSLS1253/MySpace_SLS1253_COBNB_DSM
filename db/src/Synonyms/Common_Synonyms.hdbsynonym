@@ -1,0 +1,14 @@
+{
+    "syn_Dummy": {
+    "target": {
+      "object": "DUMMY",
+      "schema": "SYS"
+    }
+  },
+  "syn_Table_Columns": {
+    "target": {
+      "object": "TABLE_COLUMNS",
+      "schema": "SYS"
+    }
+  }
+}

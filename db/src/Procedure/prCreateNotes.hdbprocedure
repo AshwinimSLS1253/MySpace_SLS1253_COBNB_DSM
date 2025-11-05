@@ -1,0 +1,51 @@
+PROCEDURE "prCreateNotes"( 
+    
+	IN NOTID BIGINT,            -- Notes ID
+	   DSMID BIGINT,            -- Disability ID
+	   NTSDT DATE,              -- NOtes DAte
+	   NTSTM TIME,              -- NOtes Time
+	   NOTES NVARCHAR(5000),    -- Notes Description
+	   ISDEL NVARCHAR(1),       -- ISDEL
+	   NSBDT DATE,              -- Notes Submission DAte
+	OUT oNOTID BIGINT           -- Notes Out ID
+	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+--    READS SQL DATA
+    AS
+BEGIN
+   
+DECLARE SEQENCE NVARCHAR(500);
+DECLARE QUERY NVARCHAR(500);
+
+	IF NOTID = 0 THEN
+	
+		INSERT INTO "DSM_T_NOTES"(DSMID,NTSBY,NTSDT, NTSTM, NOTES, CRTBY, CRTDT, CRTTM,ISDEL,NSBDT) 
+		VALUES(DSMID,SESSION_CONTEXT('APPLICATIONUSER'), NTSDT,NTSTM,NOTES,SESSION_CONTEXT('APPLICATIONUSER'), CURRENT_DATE, CURRENT_TIME,ISDEL,NSBDT);
+	
+		-- Generate Sequene for Primary key column
+        SELECT '"_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#"' INTO SEQENCE FROM "syn_Table_Columns" WHERE 
+        (TABLE_NAME='DSM_T_NOTES' ) AND COLUMN_NAME='NOTID';
+        --Append sequence in Query
+        QUERY:='select '||SEQENCE||'.CURRVAL from "syn_Dummy"';
+        -- Execute Sequnce query
+        EXECUTE IMMEDIATE QUERY INTO oNOTID;
+		
+	ELSE 
+	
+		UPDATE "DSM_T_NOTES"
+		SET	NTSDT=:NTSDT,
+    		NTSTM =:NTSTM,
+    		NOTES =:NOTES,
+    		ISDEL=:ISDEL,
+    		CHNBY = SESSION_CONTEXT('APPLICATIONUSER'),
+    		CHNDT = CURRENT_DATE,
+    		CHNTM = CURRENT_TIME ,
+    		NSBDT=:NSBDT
+		WHERE NOTID =:NOTID AND ISDEL = '0';
+		oNOTID=:NOTID;
+		
+	END IF;
+	
+END
