@@ -1,4 +1,12 @@
-PROCEDURE "prCreateNotes"( 
+/******************************************Project- COBNB *****************************************/
+/* Developer Name 				: Ashwini Mahajan 												  */
+/* Date      					: 06-11-2025											  	      */
+/* Module                       : DSM                                                             */
+/* Functionality 				: Claim Managment Services (For OHS view)    	    		      */
+/* Service Name 				: prCreateNotes.hdbprocedures				         	          */
+/**************************************************************************************************/
+
+PROCEDURE prCreateNotes( 
     
 	IN NOTID BIGINT,            -- Notes ID
 	   DSMID BIGINT,            -- Disability ID
@@ -6,8 +14,8 @@ PROCEDURE "prCreateNotes"(
 	   NTSTM TIME,              -- NOtes Time
 	   NOTES NVARCHAR(5000),    -- Notes Description
 	   ISDEL NVARCHAR(1),       -- ISDEL
-	   NSBDT DATE,              -- Notes Submission DAte
-	OUT oNOTID BIGINT           -- Notes Out ID
+	   NSBDT DATE--              -- Notes Submission DAte
+	--OUT ONOTID BIGINT           -- Notes Out ID
 	
 )
    LANGUAGE SQLSCRIPT
@@ -19,22 +27,22 @@ BEGIN
 DECLARE SEQENCE NVARCHAR(500);
 DECLARE QUERY NVARCHAR(500);
 
-	IF NOTID = 0 THEN
+	IF :NOTID = 0 THEN
 	
-		INSERT INTO "DSM_T_NOTES"(DSMID,NTSBY,NTSDT, NTSTM, NOTES, CRTBY, CRTDT, CRTTM,ISDEL,NSBDT) 
+		INSERT INTO DSM_T_NOTES(DSMID,NTSBY,NTSDT, NTSTM, NOTES, CRTBY, CRTDT, CRTTM,ISDEL,NSBDT) 
 		VALUES(DSMID,SESSION_CONTEXT('APPLICATIONUSER'), NTSDT,NTSTM,NOTES,SESSION_CONTEXT('APPLICATIONUSER'), CURRENT_DATE, CURRENT_TIME,ISDEL,NSBDT);
 	
 		-- Generate Sequene for Primary key column
-        SELECT '"_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#"' INTO SEQENCE FROM "syn_Table_Columns" WHERE 
-        (TABLE_NAME='DSM_T_NOTES' ) AND COLUMN_NAME='NOTID';
-        --Append sequence in Query
-        QUERY:='select '||SEQENCE||'.CURRVAL from "syn_Dummy"';
-        -- Execute Sequnce query
-        EXECUTE IMMEDIATE QUERY INTO oNOTID;
+        -- SELECT '"_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#"' INTO SEQENCE FROM "syn_Table_Columns" WHERE 
+        -- (TABLE_NAME='DSM_T_NOTES' ) AND COLUMN_NAME='NOTID';
+        -- --Append sequence in Query
+        -- QUERY:='select '||SEQENCE||'.CURRVAL from "syn_Dummy"';
+        -- -- Execute Sequnce query
+        -- EXECUTE IMMEDIATE QUERY INTO ONOTID;
 		
 	ELSE 
 	
-		UPDATE "DSM_T_NOTES"
+		UPDATE DSM_T_NOTES
 		SET	NTSDT=:NTSDT,
     		NTSTM =:NTSTM,
     		NOTES =:NOTES,
@@ -44,7 +52,7 @@ DECLARE QUERY NVARCHAR(500);
     		CHNTM = CURRENT_TIME ,
     		NSBDT=:NSBDT
 		WHERE NOTID =:NOTID AND ISDEL = '0';
-		oNOTID=:NOTID;
+		--ONOTID=:NOTID;
 		
 	END IF;
 	

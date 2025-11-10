@@ -1,0 +1,7 @@
+###
+POST http://localhost:4004/odata/v2/claim-managment/RybXHYhRMAVoQfdA
+Content-Type: application/json
+ 
+ {"FXPUWMCJEKALGSTV":"{\"NOTES\":[{\"NOTID\":0,\"DSMID\":2,\"NTSDT\":\"2025-09-23\",\"NTSTM\":\"11:22:33\",\"NOTES\":\"testing\",\"ISDEL\":\"0\",\"NSBDT\":\"2025-09-23\"}]}"}
+###
+

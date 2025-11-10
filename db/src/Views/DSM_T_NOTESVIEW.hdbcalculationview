@@ -88,7 +88,7 @@
     </input>
     <joinAttribute name="JOIN$NTSTL$MSTID"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="EMPLY" multiJoinOrder="Outside In">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_N" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="EMPLY" multiJoinOrder="Outside In">
     <viewAttributes>
       <viewAttribute id="NOTID"/>
       <viewAttribute id="DSMID"/>
@@ -173,7 +173,9 @@
   
     <attribute id="MSTID" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MSTID"/>
+  
       <keyMapping columnObjectName="Join_1_2" columnName="MSTID"/>
+  
     </attribute>
     <attribute id="NOTESTITLENAMES" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NOTESTITLENAMES"/>
@@ -188,26 +190,26 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="221" y="112"/>
+      <upperLeftCorner x="361" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="NOTES" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="376"/>
+      <upperLeftCorner x="91" y="391"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="EMPLY" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="376"/>
+      <upperLeftCorner x="512" y="391"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="MASTER" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="541" y="376"/>
+      <upperLeftCorner x="302" y="391"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="221" y="217"/>
+      <upperLeftCorner x="302" y="236"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="EMPLY" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
